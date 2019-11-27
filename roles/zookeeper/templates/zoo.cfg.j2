@@ -1,0 +1,31 @@
+tickTime={{ tick_time }}
+dataDir={{ data_dir }}
+dataLogDir={{ log_dir }}
+clientPort={{ client_port }}
+initLimit={{ init_limit }}
+syncLimit={{ sync_limit }}
+maxSessionTimeout={{max_session_timeout}}
+maxClientCnxns={{ zookeeper_max_client_connections }}
+{% if zookeeper_autopurge_purgeInterval > 0 %}
+autopurge.purgeInterval={{ zookeeper_autopurge_purgeInterval }}
+autopurge.snapRetainCount={{ zookeeper_autopurge_snapRetainCount }}
+{% endif %}
+
+preAllocSize=131072
+snapCount=3000000
+leaderServes=yes
+standaloneEnabled=false
+dynamicConfigFile=/etc/zookeeper/conf/zoo.cfg.dynamic
+
+
+{% for server in zookeeper_hosts %}
+{% if server.host is defined %}
+{% if server.ip is defined %}
+server.{{server.id}}={{server.ip}}:{{zookeeper_cluster_ports}}
+{% else %}
+server.{{server.id}}={{server.host}}:{{zookeeper_cluster_ports}}
+{% endif %}
+{% else %}
+server.{{loop.index}}={{server}}:{{zookeeper_cluster_ports}}
+{% endif %}
+{% endfor %}

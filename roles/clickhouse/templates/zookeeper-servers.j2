@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- {{ ansible_managed }} -->
+<yandex>
+  <zookeeper>
+{% for server in zookeeper_hosts %}
+    <node index="{{server.id}}">
+{% if server.host is defined %}
+{% if server.ip is defined %}
+        <host>{{server.ip}}</host>
+{% else %}
+        <host>{{server.host}}</host>
+{% endif %}
+{% else %}
+        <host>{{server}}</host>
+{% endif %}
+      <port>2181</port>
+    </node>
+{% endfor %}
+
+  </zookeeper>
+</yandex>
+
+

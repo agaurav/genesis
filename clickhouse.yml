@@ -1,0 +1,15 @@
+# vim:ft=ansible:
+
+# Author : Ashish Gaurav
+# Email  : ashish@archsaber.com
+#
+
+---
+
+- hosts: clickhouse-servers
+  become: true
+  vars:
+  roles:
+    - java
+    - role: clickhouse
+      clickhouse_zookeeper_nodes: "{{groups['zookeepers']}}"

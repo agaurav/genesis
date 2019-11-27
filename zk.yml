@@ -1,0 +1,14 @@
+# vim:ft=ansible:
+
+# Author : Ashish Gaurav
+# Email  : ashish@archsaber.com
+#
+
+---
+
+- hosts: zookeepers
+  become: true
+  roles:
+    - java
+    - role: zookeeper
+      zookeeper_hosts: "{{groups['zookeepers']}}"

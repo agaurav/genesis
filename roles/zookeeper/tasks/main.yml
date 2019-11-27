@@ -1,0 +1,39 @@
+---
+
+- name: Create a xfs filesystem on /dev/nvme0n1 for log dir
+  filesystem:
+    fstype: xfs
+    dev: /dev/nvme0n1
+
+- name: Mount it to datadir
+  mount:
+    path: "{{ log_dir }}"
+    src: /dev/nvme0n1
+    fstype: ext4
+    opts: discard,defaults,nofail
+    state: mounted
+
+- name: Create a ext4 filesystem on /dev/nvme1n1 for data dir
+  filesystem:
+    fstype: xfs
+    dev: /dev/nvme1n1
+
+- name: Mount it to datadir
+  mount:
+    path: "{{ data_dir }}"
+    src: /dev/nvme1n1
+    fstype: ext4
+    opts: discard,defaults,nofail
+    state: mounted
+
+
+- include_tasks: Debian.yml
+  when: ansible_os_family == 'Debian' and zookeeper_debian_apt_install
+
+- include_tasks: Debian-tarball.yml
+  when: ansible_os_family == 'Debian' and not zookeeper_debian_apt_install
+
+- include_tasks: RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: common-config.yml

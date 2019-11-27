@@ -1,0 +1,34 @@
+{# NAME=zookeeper
+ZOOCFGDIR=/opt/zookeeper-3.5.6/conf #}
+
+# TODO this is really ugly
+# How to find out, which jars are needed?
+# seems, that log4j requires the log4j.properties file to be in the classpath
+
+{# ZOOCFG="$ZOOCFGDIR/zoo.cfg"
+ZOO_LOG_DIR=/var/log/$NAME
+USER=zookeeper
+GROUP=zookeeper
+PIDDIR=/var/run/$NAME
+PIDFILE=$PIDDIR/$NAME.pid
+JAVA=/usr/bin/java #}
+{# ZOOMAIN="org.apache.zookeeper.server.quorum.QuorumPeerMain" #}
+{# ZOO_LOG4J_PROP="INFO,ROLLINGFILE"
+JMXLOCALONLY=false #}
+JAVA_OPTS="-Xms128M \
+    -Xmx1G \
+    -Xloggc:/var/log/$NAME/zookeeper-gc.log \
+    -XX:+UseGCLogFileRotation \
+    -XX:NumberOfGCLogFiles=16 \
+    -XX:GCLogFileSize=16M \
+    -verbose:gc \
+    -XX:+PrintGCTimeStamps \
+    -XX:+PrintGCDateStamps \
+    -XX:+PrintGCDetails
+    -XX:+PrintTenuringDistribution \
+    -XX:+PrintGCApplicationStoppedTime \
+    -XX:+PrintGCApplicationConcurrentTime \
+    -XX:+PrintSafepointStatistics \
+    -XX:+UseParNewGC \
+    -XX:+UseConcMarkSweepGC \
+-XX:+CMSParallelRemarkEnabled

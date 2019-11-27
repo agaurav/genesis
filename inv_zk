@@ -1,0 +1,9 @@
+[zookeepers]
+172.31.31.18  ansible_ssh_private_key_file=~/.ssh/aws-test-eu.pem  ansible_user=ubuntu id=1
+172.31.31.220 ansible_ssh_private_key_file=~/.ssh/aws-test-eu.pem  ansible_user=ubuntu id=2
+172.31.23.0   ansible_ssh_private_key_file=~/.ssh/aws-test-eu.pem  ansible_user=ubuntu id=3
+
+[clickhouse]
+172.31.31.18  ansible_ssh_private_key_file=~/.ssh/aws-test-eu.pem  ansible_user=ubuntu shard=1
+172.31.31.220 ansible_ssh_private_key_file=~/.ssh/aws-test-eu.pem  ansible_user=ubuntu shard=2
+172.31.23.0   ansible_ssh_private_key_file=~/.ssh/aws-test-eu.pem  ansible_user=ubuntu shard=3
